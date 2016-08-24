@@ -20,4 +20,9 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  static_pages:
+    itravel: "ITravel"
+    itravel_copyright: "Copyright © ITravel 2016. All rights reserved."
+    itravel_logo: "ITRAVEL"
+    home:
+      news_feed: "News Feed"
