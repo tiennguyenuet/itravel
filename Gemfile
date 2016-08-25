@@ -25,6 +25,10 @@ gem "carrierwave"
 gem "mini_magick"
 gem "jquery-ui-rails"
 gem "font-awesome-rails"
+gem "omniauth"
+gem "omniauth-facebook"
+gem "config"
+gem "figaro"
 
 group :development, :test do
   gem "byebug", platform: :mri

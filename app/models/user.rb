@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
-    :recoverable, :rememberable, :trackable, :validatable
+    :recoverable, :rememberable, :trackable, :validatable,
+    :omniauthable, omniauth_providers: [:facebook]
 
   has_many :review_businesses, dependent: :destroy
   has_many :businesses, through: :review_businesses, dependent: :destroy
@@ -18,4 +19,24 @@ class User < ApplicationRecord
   has_many :following, through: :active_follows, source: :following
   has_many :followers, through: :passive_follows, source: :follower
   has_many :images, dependent: :destroy
+
+  class << self
+    def from_omniauth auth
+      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+        user.email = auth.info.email
+        user.name = auth.info.name
+        user.avatar = auth.info.image
+        user.password = Devise.friendly_token[0,20]
+      end
+    end
+
+    def new_with_session params, session
+      super.tap do |user|
+        if data = session["devise.facebook_data"] &&
+          session["devise.facebook_data"]["extra"]["raw_info"]
+          user.email = data["email"] if user.email.blank?
+        end
+      end
+    end
+  end
 end
