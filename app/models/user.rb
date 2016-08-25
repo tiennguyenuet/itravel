@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  mount_uploader :avatar, AvatarUploader
+  validate :avatar_size
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable,
     :omniauthable, omniauth_providers: [:facebook]
@@ -18,7 +20,6 @@ class User < ApplicationRecord
     foreign_key: :following_id, dependent: :destroy
   has_many :following, through: :active_follows, source: :following
   has_many :followers, through: :passive_follows, source: :follower
-  has_many :images, dependent: :destroy
 
   class << self
     def from_omniauth auth
@@ -37,6 +38,13 @@ class User < ApplicationRecord
           user.email = data["email"] if user.email.blank?
         end
       end
+    end
+  end
+
+  private
+  def avatar_size
+    if avatar.size > Settings.size_avatar.megabytes
+      self.errors.add :avatar, I18n.t("users.avatar.error_size")
     end
   end
 end
