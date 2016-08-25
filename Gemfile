@@ -21,14 +21,15 @@ gem "sidekiq"
 gem "whenever", require: false
 gem "public_activity"
 gem "ckeditor"
-gem "carrierwave"
-gem "mini_magick"
 gem "jquery-ui-rails"
 gem "font-awesome-rails"
 gem "omniauth"
 gem "omniauth-facebook"
 gem "config"
 gem "figaro"
+gem "carrierwave"
+gem "mini_magick"
+gem "fog", "1.36.0"
 
 group :development, :test do
   gem "byebug", platform: :mri
@@ -44,4 +45,5 @@ group :development, :test do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem "tzinfo-data", platforms: [:mingw, :mswin, :jruby]
+

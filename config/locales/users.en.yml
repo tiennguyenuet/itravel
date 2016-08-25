@@ -1,0 +1,4 @@
+en:
+  users:
+    avatar:
+      error_size: "should be less than 5MB"
